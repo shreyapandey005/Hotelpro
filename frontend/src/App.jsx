@@ -6,7 +6,7 @@ import AdminBookings from "./pages/AdminBookings";
 import MyBookings from "./pages/MyBookings";
 import "./App.css";
 
-const API = "http://localhost:5000/api";
+const API = `${import.meta.env.VITE_API_BASE_URL || "http://localhost:5000"}/api`;
 
 function todayString() {
   const d = new Date();
