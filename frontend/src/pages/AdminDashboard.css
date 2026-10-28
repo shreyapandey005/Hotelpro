@@ -1,0 +1,303 @@
+
+.admin-page {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+  color: #202b3c;
+  font-family: Arial, sans-serif;
+}
+
+.admin-sidebar {
+  width: 235px;
+  flex-shrink: 0;
+  padding: 32px 20px;
+  background: #17253c;
+  color: white;
+}
+
+.admin-sidebar h2 {
+  margin: 0 0 35px;
+  font-size: 28px;
+}
+
+.sidebar-caption,
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #718096;
+}
+
+.sidebar-caption {
+  color: #a8b4c8;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 13px 14px;
+  margin: 8px 0;
+  border-radius: 8px;
+  color: #d7dfed;
+  text-decoration: none;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: #304563;
+  color: white;
+}
+
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  padding: 34px;
+}
+
+.admin-header,
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-header {
+  margin-bottom: 28px;
+}
+
+.admin-header h1 {
+  margin: 8px 0;
+  font-size: 32px;
+}
+
+.admin-header p {
+  color: #718096;
+}
+
+.website-button,
+.admin-main button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 17px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.website-button,
+.room-form button {
+  background: #a87943;
+  color: white;
+}
+
+.admin-main button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.stat-card,
+.admin-panel {
+  background: white;
+  border: 1px solid #e8edf4;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 5px 18px rgba(25, 42, 70, 0.04);
+}
+
+.stat-card span {
+  color: #718096;
+  font-size: 14px;
+}
+
+.stat-card h2 {
+  margin: 15px 0 8px;
+  font-size: 30px;
+}
+
+.stat-card p {
+  margin-bottom: 0;
+  color: #8994a5;
+  font-size: 13px;
+}
+
+.admin-panel {
+  margin-bottom: 25px;
+}
+
+.panel-heading {
+  margin-bottom: 22px;
+}
+
+.panel-heading h2 {
+  margin: 6px 0 0;
+  font-size: 22px;
+}
+
+.room-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.room-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.room-form input,
+.room-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  padding: 12px;
+  background: white;
+  color: #202b3c;
+  font: inherit;
+  font-weight: 400;
+}
+
+.room-form input:focus,
+.room-form textarea:focus {
+  outline: 2px solid #c8a57e;
+  border-color: #a87943;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions,
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cancel-button,
+.refresh-button {
+  background: #e8edf4;
+  color: #34445b;
+}
+
+.rooms-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.rooms-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.rooms-table th,
+.rooms-table td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #edf0f5;
+  vertical-align: middle;
+}
+
+.rooms-table th {
+  color: #718096;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.room-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 160px;
+}
+
+.room-cell img {
+  width: 54px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 7px;
+  background: #e8edf4;
+}
+
+.edit-button {
+  background: #e6efff;
+  color: #2454a6;
+}
+
+.delete-button {
+  background: #ffebeb;
+  color: #b42318;
+}
+
+.notice {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: 8px;
+}
+
+.notice.error {
+  background: #fff0f0;
+  color: #a61b1b;
+}
+
+.notice.success {
+  background: #eaf8ef;
+  color: #176b37;
+}
+
+@media (max-width: 950px) {
+  .admin-sidebar {
+    width: 175px;
+    padding: 25px 12px;
+  }
+
+  .admin-main {
+    padding: 22px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-page {
+    display: block;
+  }
+
+  .admin-sidebar {
+    width: auto;
+    padding: 18px;
+  }
+
+  .admin-sidebar h2 {
+    margin-bottom: 12px;
+  }
+
+  .admin-main {
+    padding: 16px;
+  }
+
+  .admin-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .room-form {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}

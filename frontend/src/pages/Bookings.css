@@ -1,0 +1,74 @@
+
+/* Booking flow and reservation pages */
+.booking-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 18px;
+  background: rgba(17, 25, 40, .68);
+}
+.booking-modal {
+  position: relative;
+  width: min(100%, 500px);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 30px;
+  border-radius: 18px;
+  background: #fff;
+  color: #202b3c;
+  box-shadow: 0 25px 70px rgba(0,0,0,.25);
+}
+.booking-modal h2 { margin: 8px 0; }
+.booking-close {
+  position: absolute; right: 16px; top: 12px; border: 0;
+  background: transparent; font-size: 30px; cursor: pointer; color: #555;
+}
+.booking-form { display: grid; gap: 14px; margin-top: 20px; }
+.booking-form label { display: grid; gap: 6px; font-weight: 600; font-size: 14px; }
+.booking-form input, .booking-form select, .status-editor select {
+  width: 100%; padding: 11px 12px; border: 1px solid #d7dce5;
+  border-radius: 8px; background: #fff; color: #202b3c; font: inherit;
+}
+.booking-total { padding: 12px; border-radius: 8px; background: #f5f7fb; }
+.booking-submit, .cancel-booking-button {
+  display: inline-block; padding: 12px 16px; border: 0; border-radius: 8px;
+  background: #173e35; color: white; font-weight: 700; cursor: pointer; text-decoration: none;
+}
+.booking-submit:disabled { opacity: .6; cursor: wait; }
+.booking-error, .bookings-error { color: #a32222; background: #fff0f0; padding: 12px; border-radius: 8px; }
+.booking-note { color: #667085; font-size: 12px; line-height: 1.5; margin: 0; }
+.bookings-page { min-height: 100vh; background: #f5f7fb; color: #202b3c; }
+.bookings-nav { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 20px clamp(20px, 6vw, 90px); background: white; box-shadow: 0 2px 12px rgba(0,0,0,.04); }
+.bookings-nav > div { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.bookings-nav a { color: #173e35; text-decoration: none; font-weight: 600; }
+.bookings-nav button { border: 0; background: #173e35; color: white; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+.bookings-content { width: min(1100px, 92%); margin: 0 auto; padding: 55px 0 80px; }
+.bookings-content h1 { font-size: clamp(30px, 5vw, 44px); margin: 8px 0; }
+.bookings-subtitle { color: #667085; margin-bottom: 28px; }
+.booking-list, .admin-booking-list { display: grid; gap: 18px; }
+.booking-record { padding: 24px; border-radius: 14px; background: white; border: 1px solid #e6eaf0; box-shadow: 0 6px 20px rgba(18, 35, 52, .04); }
+.booking-record h2 { margin: 18px 0; font-size: 23px; }
+.booking-record-head { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+.booking-record-head .eyebrow { margin: 0 0 5px; }
+.booking-record-head strong { overflow-wrap: anywhere; font-size: 12px; color: #667085; }
+.status-pill { display: inline-block; border-radius: 999px; padding: 7px 12px; background: #edf1f5; color: #344054; font-size: 12px; font-weight: 700; text-transform: capitalize; }
+.status-confirmed, .status-checked-in, .status-checked-out { background: #e4f6ec; color: #166534; }
+.status-cancelled { background: #fee4e2; color: #912018; }
+.booking-record-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 18px; margin: 20px 0; }
+.booking-record-grid div { display: grid; gap: 6px; }
+.booking-record-grid span { color: #667085; font-size: 12px; }
+.booking-record-grid strong { overflow-wrap: anywhere; font-size: 14px; }
+.cancel-booking-button { background: #a32222; }
+.empty-bookings { padding: 35px; text-align: center; background: white; border-radius: 14px; }
+.bookings-notice { color: #166534; background: #e4f6ec; padding: 12px; border-radius: 8px; }
+.status-editor { display: flex; gap: 12px; align-items: center; max-width: 380px; font-size: 14px; font-weight: 600; }
+@media (max-width: 600px) {
+  .booking-modal { padding: 24px 18px; }
+  .bookings-nav { align-items: flex-start; }
+  .booking-record { padding: 18px; }
+  .status-editor { align-items: stretch; flex-direction: column; }
+}

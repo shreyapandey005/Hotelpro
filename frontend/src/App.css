@@ -1,0 +1,302 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #202820;
+  background: #fffdf8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar {
+  min-height: 78px;
+  padding: 18px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #fffdf8;
+}
+
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.brand span {
+  color: #b78a52;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  font-size: 14px;
+}
+
+.nav-links a:hover {
+  color: #b78a52;
+}
+
+.nav-button,
+.primary-button {
+  background: #244936;
+  color: white;
+  padding: 13px 21px;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.hero {
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  padding: 70px 8%;
+  background:
+    linear-gradient(90deg, rgba(17, 35, 25, .88), rgba(17, 35, 25, .15)),
+    url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1800')
+    center/cover no-repeat;
+  color: white;
+}
+
+.hero-content {
+  max-width: 560px;
+}
+
+.eyebrow {
+  color: #b78a52;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 6vw, 68px);
+  line-height: 1.12;
+  margin: 20px 0;
+}
+
+.hero-text {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 440px;
+  margin-bottom: 28px;
+  color: #f0f0e8;
+}
+
+.primary-button {
+  background: #b78a52;
+}
+
+.search-section {
+  max-width: 1050px;
+  margin: -35px auto 0;
+  position: relative;
+  padding: 0 20px;
+}
+
+.search-form {
+  background: white;
+  box-shadow: 0 10px 35px #1c30200d;
+  padding: 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 20px;
+  align-items: end;
+}
+
+.search-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.search-form input,
+.search-form select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #e5e5df;
+  padding: 12px;
+  background: white;
+  font: inherit;
+  color: #202820;
+}
+
+.search-button {
+  background: #244936;
+  color: white;
+  padding: 14px 18px;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.rooms-section {
+  padding: 85px 7% 90px;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-heading h2,
+.about-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 4vw, 43px);
+  margin: 12px 0;
+}
+
+.section-heading > p:last-child,
+.about-section > p:last-child {
+  color: #70756e;
+  line-height: 1.7;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.room-card {
+  background: white;
+  border: 1px solid #efeee8;
+  overflow: hidden;
+}
+
+.room-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+.room-details {
+  padding: 23px;
+}
+
+.room-details h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 23px;
+  margin: 0 0 10px;
+}
+
+.room-details > p {
+  color: #73776f;
+  line-height: 1.6;
+  min-height: 48px;
+  font-size: 14px;
+}
+
+.room-footer {
+  border-top: 1px solid #eee;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.room-footer strong {
+  font-size: 19px;
+}
+
+.room-footer span {
+  color: #777;
+  font-size: 12px;
+}
+
+.room-footer button {
+  border: none;
+  background: transparent;
+  color: #244936;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.about-section {
+  padding: 65px 20px;
+  text-align: center;
+  background: #f2f2e9;
+}
+
+footer {
+  background: #193426;
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+}
+
+.footer-brand {
+  display: inline-block;
+}
+
+footer p {
+  color: #d5ddd6;
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .search-form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .room-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero {
+    min-height: 440px;
+    padding: 50px 7%;
+  }
+
+  .search-form,
+  .room-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rooms-section {
+    padding: 65px 6%;
+  }
+}
