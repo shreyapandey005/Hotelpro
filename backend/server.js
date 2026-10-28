@@ -1,24 +1,25 @@
-const Room = require("./models/Room");
-const bookingRoutes = require("./routes/bookings");
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+const Room = require("./models/Room");
+const bookingRoutes = require("./routes/bookings");
 const authRoutes = require("./routes/auth");
 const {
   authenticateToken,
   requireAdmin
 } = require("./middleware/authMiddleware");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/bookings", bookingRoutes);
 
-// Room schema: defines how room data is stored in MongoDB
-
-// Initial room data for a new, empty collection
 const defaultRooms = [
   {
     id: 1,
@@ -46,180 +47,190 @@ const defaultRooms = [
   }
 ];
 
-// Home route
+const roomFields = ["name", "price", "description", "image"];
+
 app.get("/", (req, res) => {
   res.send("HotelPro backend is running successfully!");
 });
 
-// Get rooms from MongoDB
+// Get rooms
 app.get("/api/rooms", async (req, res) => {
   try {
     const rooms = await Room.find();
     res.json(rooms);
   } catch (error) {
     console.error("Error fetching rooms:", error.message);
-    res.status(500).json({ message: "Could not fetch rooms" });
+    res.status(500).json({ message: "Could not fetch rooms." });
   }
 });
 
-const roomFields = ["name", "price", "description", "image"];
-
-// Add a new room
+// Add room
 app.post(
   "/api/rooms",
   authenticateToken,
   requireAdmin,
   async (req, res) => {
-  try {
-    const { name, price, description, image } = req.body;
-
-    if (
-      !name?.trim() ||
-      price === undefined ||
-      price === "" ||
-      !description?.trim() ||
-      !image?.trim()
-    ) {
-      return res.status(400).json({
-        message: "Please fill in all room fields."
-      });
-    }
-
-    const numericPrice = Number(price);
-
-    if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
-      return res.status(400).json({
-        message: "Price must be a number greater than zero."
-      });
-    }
-
-    const lastRoom = await Room.findOne().sort({ id: -1 });
-    const nextId = lastRoom ? lastRoom.id + 1 : 1;
-
-    const room = await Room.create({
-      id: nextId,
-      name: name.trim(),
-      price: numericPrice,
-      description: description.trim(),
-      image: image.trim()
-    });
-
-    res.status(201).json(room);
-  } catch (error) {
-    console.error("Add room error:", error.message);
-    res.status(500).json({ message: "Could not add room." });
-  }
-});
-
-// Update an existing room
-app.put(
-  "/api/rooms/:id",
-  authenticateToken,
-  requireAdmin,
-  async (req, res) => {
-  try {
-    const updates = {};
-
-    for (const field of roomFields) {
-      if (req.body[field] !== undefined) {
-        updates[field] = req.body[field];
-      }
-    }
-
-    if (
-      updates.name !== undefined &&
-      (typeof updates.name !== "string" || !updates.name.trim())
-    ) {
-      return res.status(400).json({ message: "Room name is required." });
-    }
-
-    if (
-      updates.description !== undefined &&
-      (typeof updates.description !== "string" ||
-        !updates.description.trim())
-    ) {
-      return res.status(400).json({
-        message: "Room description is required."
-      });
-    }
-
-    if (
-      updates.image !== undefined &&
-      (typeof updates.image !== "string" || !updates.image.trim())
-    ) {
-      return res.status(400).json({ message: "Room image URL is required." });
-    }
-
-    if (updates.name !== undefined) updates.name = updates.name.trim();
-    if (updates.description !== undefined) {
-      updates.description = updates.description.trim();
-    }
-    if (updates.image !== undefined) updates.image = updates.image.trim();
-
-    if (updates.price !== undefined) {
-      const numericPrice = Number(updates.price);
+    try {
+      const { name, price, description, image } = req.body;
 
       if (
-        updates.price === "" ||
-        !Number.isFinite(numericPrice) ||
-        numericPrice <= 0
+        typeof name !== "string" ||
+        !name.trim() ||
+        price === undefined ||
+        price === "" ||
+        typeof description !== "string" ||
+        !description.trim() ||
+        typeof image !== "string" ||
+        !image.trim()
       ) {
+        return res.status(400).json({
+          message: "Please fill in all room fields."
+        });
+      }
+
+      const numericPrice = Number(price);
+
+      if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
         return res.status(400).json({
           message: "Price must be a number greater than zero."
         });
       }
 
-      updates.price = numericPrice;
+      const lastRoom = await Room.findOne().sort({ id: -1 });
+      const nextId = lastRoom ? lastRoom.id + 1 : 1;
+
+      const room = await Room.create({
+        id: nextId,
+        name: name.trim(),
+        price: numericPrice,
+        description: description.trim(),
+        image: image.trim()
+      });
+
+      res.status(201).json(room);
+    } catch (error) {
+      console.error("Add room error:", error.message);
+      res.status(500).json({ message: "Could not add room." });
     }
-
-    const room = await Room.findOneAndUpdate(
-      { id: Number(req.params.id) },
-      { $set: updates },
-      { new: true, runValidators: true }
-    );
-
-    if (!room) {
-      return res.status(404).json({ message: "Room not found." });
-    }
-
-    res.json(room);
-  } catch (error) {
-    console.error("Update room error:", error.message);
-    res.status(500).json({ message: "Could not update room." });
   }
-});
+);
 
-// Delete a room
+// Update room
+app.put(
+  "/api/rooms/:id",
+  authenticateToken,
+  requireAdmin,
+  async (req, res) => {
+    try {
+      const updates = {};
+
+      for (const field of roomFields) {
+        if (req.body[field] !== undefined) {
+          updates[field] = req.body[field];
+        }
+      }
+
+      if (Object.keys(updates).length === 0) {
+        return res.status(400).json({
+          message: "No valid room fields provided."
+        });
+      }
+
+      for (const field of ["name", "description", "image"]) {
+        if (updates[field] !== undefined) {
+          if (
+            typeof updates[field] !== "string" ||
+            !updates[field].trim()
+          ) {
+            return res.status(400).json({
+              message: `${field} must not be empty.`
+            });
+          }
+
+          updates[field] = updates[field].trim();
+        }
+      }
+
+      if (updates.price !== undefined) {
+        const numericPrice = Number(updates.price);
+
+        if (
+          updates.price === "" ||
+          !Number.isFinite(numericPrice) ||
+          numericPrice <= 0
+        ) {
+          return res.status(400).json({
+            message: "Price must be a number greater than zero."
+          });
+        }
+
+        updates.price = numericPrice;
+      }
+
+      const room = await Room.findOneAndUpdate(
+        { id: Number(req.params.id) },
+        { $set: updates },
+        { new: true, runValidators: true }
+      );
+
+      if (!room) {
+        return res.status(404).json({
+          message: "Room not found."
+        });
+      }
+
+      res.json(room);
+    } catch (error) {
+      console.error("Update room error:", error.message);
+      res.status(500).json({
+        message: "Could not update room."
+      });
+    }
+  }
+);
+
+// Delete room
 app.delete(
   "/api/rooms/:id",
   authenticateToken,
   requireAdmin,
   async (req, res) => {
-  try {
-    const room = await Room.findOneAndDelete({
-      id: Number(req.params.id)
-    });
+    try {
+      const room = await Room.findOneAndDelete({
+        id: Number(req.params.id)
+      });
 
-    if (!room) {
-      return res.status(404).json({ message: "Room not found." });
+      if (!room) {
+        return res.status(404).json({
+          message: "Room not found."
+        });
+      }
+
+      res.json({ message: "Room deleted successfully." });
+    } catch (error) {
+      console.error("Delete room error:", error.message);
+      res.status(500).json({
+        message: "Could not delete room."
+      });
     }
-
-    res.json({ message: "Room deleted successfully." });
-  } catch (error) {
-    console.error("Delete room error:", error.message);
-    res.status(500).json({ message: "Could not delete room." });
   }
-});
+);
 
-
-// Connect to MongoDB and start the server
+// Connect to MongoDB, then start Express
 async function startServer() {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    const mongoUri = process.env.MONGO_URI;
+
+    if (!mongoUri) {
+      throw new Error(
+        "MONGO_URI is missing. Configure it in backend/.env locally or Render Environment."
+      );
+    }
+
+    await mongoose.connect(mongoUri);
 
     console.log("MongoDB connected successfully!");
 
-    // Add sample rooms only when the collection is empty
     const roomCount = await Room.countDocuments();
 
     if (roomCount === 0) {
@@ -229,7 +240,7 @@ async function startServer() {
 
     const PORT = process.env.PORT || 5000;
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`HotelPro server running on port ${PORT}`);
     });
   } catch (error) {
